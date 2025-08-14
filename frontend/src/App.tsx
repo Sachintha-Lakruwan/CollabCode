@@ -1,15 +1,18 @@
 import { NextUIProvider } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
+import CodeEditor from "./components/CodeEditor";
 
 function App() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [code, setCode] = useState<string>("");
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
       inputRef.current.select();
     }
   }, []);
+
   return (
     <NextUIProvider>
       <div className=" w-full h-[100vh] p-6">
@@ -17,7 +20,7 @@ function App() {
           <div className=" font-bold text-3xl">CollabCode</div>
           <div className=" flex gap-3">
             <ul className=" flex gap-2">
-              {["boy", "girl", "public"].map((item, index) => (
+              {["boy", "girl"].map((item, index) => (
                 <li
                   className="h-10 aspect-square bg-zinc-200 rounded-full"
                   key={index}
@@ -36,13 +39,12 @@ function App() {
           </div>
         </div>
         <div className=" w-full h-[calc(100vh-7rem)] p-6 rounded-2xl mt-4 bg-zinc-50 outline-1">
-          <textarea
-            ref={inputRef}
+          <CodeEditor
             value={code}
-            onChange={(e) => setCode(e.target.value)}
-            className="w-full font-mono h-full resize-none outline-none border-none"
+            onChange={setCode}
             placeholder="Type here..."
-          ></textarea>
+            language="javascript"
+          />
         </div>
       </div>
     </NextUIProvider>
