@@ -1,58 +1,7 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import { NextUIProvider } from "@nextui-org/react";
 
 function App() {
-  const [document, setDocument] = useState("");
-  const [socket, setSocket] = useState<WebSocket | null>(null);
-
-  useEffect(() => {
-    const newSocket = new WebSocket("ws://localhost:3001");
-    setSocket(newSocket);
-
-    newSocket.onopen = () => {
-      console.log("WebSocket connection established");
-    };
-
-    newSocket.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
-        if (message.type === "init") {
-          setDocument(message.data);
-        } else if (message.type === "update") {
-          setDocument(message.data);
-        }
-      } catch (error) {
-        console.error("Error parsing message:", error);
-      }
-    };
-
-    newSocket.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
-
-    newSocket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
-
-    return () => {
-      newSocket.close();
-    };
-  }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newDocument = e.target.value;
-    setDocument(newDocument);
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify({ type: "update", data: newDocument }));
-    }
-  };
-
-  return (
-    <div className="App">
-      <h1>Collaborative Editor</h1>
-      <textarea value={document} onChange={handleChange} rows={20} cols={80} />
-    </div>
-  );
+  return <NextUIProvider>{/* your app components */}</NextUIProvider>;
 }
 
 export default App;
