@@ -96,6 +96,7 @@ CollabCode is a modern, web-based JavaScript editor that enables multiple users 
    ```
 
 4. **Open your browser**
+
    - Frontend: http://localhost:5173
    - Backend: http://localhost:3001
 
