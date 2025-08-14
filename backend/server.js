@@ -39,7 +39,7 @@ wss.on("connection", (ws) => {
   });
 });
 
-const PORT = 3000;
+const PORT = 3001;
 server.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
