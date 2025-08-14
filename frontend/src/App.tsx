@@ -17,11 +17,17 @@ function App() {
           <div className=" font-bold text-3xl">CollabCode</div>
           <div className=" flex gap-3">
             <ul className=" flex gap-2">
-              {[1, 2].map((item, index) => (
+              {["boy", "girl", "public"].map((item, index) => (
                 <li
                   className="h-10 aspect-square bg-zinc-200 rounded-full"
                   key={index}
-                ></li>
+                >
+                  <img
+                    src={`https://avatar.iran.liara.run/public/${item}`}
+                    alt="user avatar"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                </li>
               ))}
             </ul>
             <button className=" bg-green-600 text-white font-bold px-6 py-2 rounded-sm">
