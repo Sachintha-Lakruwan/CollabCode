@@ -8,7 +8,7 @@ import "prismjs/components/prism-tsx";
 
 interface CodeEditorProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   placeholder?: string;
   language?: string;
 }
@@ -25,7 +25,7 @@ export default function CodeEditor({
   // Handle code changes and highlight syntax
   const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newCode = e.target.value;
-    onChange(newCode);
+    onChange(e);
 
     // Update the highlighted display
     if (codeDisplayRef.current) {
