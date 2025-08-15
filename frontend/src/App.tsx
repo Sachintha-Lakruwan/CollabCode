@@ -9,6 +9,7 @@ function App() {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     const newSocket = new WebSocket("ws://localhost:3001");
@@ -16,6 +17,7 @@ function App() {
 
     newSocket.onopen = () => {
       console.log("WebSocket connection established");
+      setIsConnected(true);
     };
 
     newSocket.onmessage = (event) => {
@@ -33,10 +35,12 @@ function App() {
 
     newSocket.onclose = () => {
       console.log("WebSocket connection closed");
+      setIsConnected(false);
     };
 
     newSocket.onerror = (error) => {
       console.error("WebSocket error:", error);
+      setIsConnected(false);
     };
 
     return () => {
@@ -60,6 +64,14 @@ function App() {
 
   return (
     <NextUIProvider>
+      {/* WebSocket Connection Status Indicator */}
+      <div
+        className={`fixed top-4 right-4 w-3 h-3 rounded-full z-50 ${
+          isConnected ? "bg-green-500" : "bg-red-500"
+        }`}
+        title={isConnected ? "WebSocket Connected" : "WebSocket Disconnected"}
+      />
+
       <div className=" w-full h-[100vh] p-6">
         <div className="flex justify-between">
           <div className=" font-bold text-3xl">CollabCode</div>
