@@ -20,7 +20,6 @@ CollabCode is a modern, web-based JavaScript editor that enables multiple users 
 
 - **Syntax Highlighting**: Professional JavaScript syntax highlighting with Prism.js
 - **Real-Time Typing**: Instant feedback as you code
-- **Multi-Language Support**: JavaScript, TypeScript, JSX, and TSX
 - **Responsive Design**: Works seamlessly on all device sizes
 
 ### 🎨 **User Experience**
@@ -29,12 +28,6 @@ CollabCode is a modern, web-based JavaScript editor that enables multiple users 
 - **Avatar System**: Visual representation of team members
 - **Offline Editing**: Continue coding even when connection is lost
 - **Drag & Drop**: Easy file management and organization
-
-### 🛠 **Developer Tools**
-
-- **In-Browser Execution**: Run and preview code directly in the browser
-- **Error Handling**: Comprehensive error reporting and debugging
-- **Performance Optimized**: Fast, responsive editing experience
 
 ## 🏗 Architecture
 
