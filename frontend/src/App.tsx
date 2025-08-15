@@ -77,13 +77,18 @@ function App() {
             </button>
           </div>
         </div>
-        <div className=" w-full h-[calc(100vh-7rem)] p-6 rounded-2xl mt-4 bg-zinc-50 outline-1">
+        <div className=" w-full h-[calc(100vh-7rem)] p-6 rounded-2xl mt-4 bg-zinc-50 outline-1 grid grid-cols-[5fr_3fr] gap-4 items-end">
           <CodeEditor
             value={document}
             onChange={handleChange}
             placeholder="Type here..."
             language="javascript"
           />
+          <div className=" bg-zinc-100 h-1/4 rounded-2xl shadow-lg p-4">
+            <p className=" text-lg font-bold">Output:</p>
+            <p className=" text-sm text-zinc-500">{output}</p>
+            <p className=" text-sm text-red-500">{error}</p>
+          </div>
         </div>
       </div>
     </NextUIProvider>
