@@ -1,11 +1,10 @@
 import { NextUIProvider } from "@nextui-org/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CodeEditor from "./components/CodeEditor";
 import Avatar from "./components/Avatar";
 
 function App() {
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [code, setCode] = useState<string>("");
+  const [document, setDocument] = useState("");
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   useEffect(() => {
@@ -13,16 +12,16 @@ function App() {
     setSocket(newSocket);
 
     newSocket.onopen = () => {
-      console.log("Connected to server");
+      console.log("WebSocket connection established");
     };
 
     newSocket.onmessage = (event) => {
       try {
         const message = JSON.parse(event.data);
         if (message.type === "init") {
-          setCode(message.data);
+          setDocument(message.data);
         } else if (message.type === "update") {
-          setCode(message.data);
+          setDocument(message.data);
         }
       } catch (error) {
         console.error("Error parsing message:", error);
@@ -30,17 +29,12 @@ function App() {
     };
 
     newSocket.onclose = () => {
-      console.log("Disconnected from server");
+      console.log("WebSocket connection closed");
     };
 
     newSocket.onerror = (error) => {
       console.error("WebSocket error:", error);
     };
-
-    if (inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.select();
-    }
 
     return () => {
       newSocket.close();
@@ -48,11 +42,10 @@ function App() {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newCode = e.target.value;
-    setCode(newCode);
-
+    const newDocument = e.target.value;
+    setDocument(newDocument);
     if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify({ type: "update", data: newCode }));
+      socket.send(JSON.stringify({ type: "update", data: newDocument }));
     }
   };
 
@@ -74,7 +67,7 @@ function App() {
         </div>
         <div className=" w-full h-[calc(100vh-7rem)] p-6 rounded-2xl mt-4 bg-zinc-50 outline-1">
           <CodeEditor
-            value={code}
+            value={document}
             onChange={handleChange}
             placeholder="Type here..."
             language="javascript"

@@ -48,6 +48,21 @@ export default function CodeEditor({
     }
   }, []);
 
+  // Update syntax highlighting when value prop changes
+  useEffect(() => {
+    if (codeDisplayRef.current) {
+      const highlightedCode = Prism.highlight(
+        value,
+        Prism.languages[language as keyof typeof Prism.languages] ||
+          Prism.languages.javascript,
+        language
+      );
+
+      // Preserve newlines by wrapping in <pre> tags
+      codeDisplayRef.current.innerHTML = `<pre style="margin: 0; padding: 0; background: transparent;">${highlightedCode}</pre>`;
+    }
+  }, [value, language]);
+
   return (
     <div
       style={{ position: "relative", width: "100%", height: "100%" }}
