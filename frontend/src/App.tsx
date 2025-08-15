@@ -2,10 +2,13 @@ import { NextUIProvider } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import CodeEditor from "./components/CodeEditor";
 import Avatar from "./components/Avatar";
+import { executeCode } from "./utils/excecuteCode";
 
 function App() {
   const [document, setDocument] = useState("");
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [output, setOutput] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const newSocket = new WebSocket("ws://localhost:3001");
@@ -49,6 +52,12 @@ function App() {
     }
   };
 
+  const handleRun = async () => {
+    const result = await executeCode(document);
+    setOutput(result.output);
+    setError(result.error);
+  };
+
   return (
     <NextUIProvider>
       <div className=" w-full h-[100vh] p-6">
@@ -60,7 +69,10 @@ function App() {
                 <Avatar key={index} item={item} index={index} />
               ))}
             </ul>
-            <button className=" bg-green-600 text-white font-bold px-6 py-2 rounded-sm">
+            <button
+              onClick={handleRun}
+              className=" bg-green-600 text-white font-bold px-6 py-2 rounded-sm cursor-pointer"
+            >
               Run
             </button>
           </div>
